@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { RolesGuard } from 'src/role/roles.guard';
 import { UsersModule } from 'src/users/users.module';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
@@ -19,6 +20,10 @@ import { LocalStrategy } from './local.strategy';
     }),
   ],
   providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
